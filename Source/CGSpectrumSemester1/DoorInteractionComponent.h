@@ -6,6 +6,16 @@
 #include "Components/ActorComponent.h"
 #include "DoorInteractionComponent.generated.h"
 
+class ATriggerBox;
+
+UENUM()
+enum class EDoorState
+{
+	DS_Closed = 0	UMETA(DisplayName = "Closed"),
+	DS_Open = 1		UMETA(DisplayName = "Open"),
+	DS_Locked = 2	UMETA(DisplayName = "Locked"),
+};
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CGSPECTRUMSEMESTER1_API UDoorInteractionComponent : public UActorComponent
 {
@@ -23,6 +33,11 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	static void OnDebugToggled(IConsoleVariable* Var);
+	void DebugDraw();
+
+protected:
+
 	UPROPERTY(EditAnywhere, Category = "Moving Door Component")
 		FRotator DesiredRotation = FRotator::ZeroRotator;
 
@@ -35,10 +50,14 @@ public:
 		float CurrentRotationTime = 0.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Moving Door Component")
-	class ATriggerBox* TriggerBox;
+	ATriggerBox* TriggerBox;
 
 	UPROPERTY(EditAnywhere, Category = "Moving Door Component")
 	FRuntimeFloatCurve OpenCurve;
+
+	UPROPERTY(BlueprintReadOnly)
+	EDoorState DoorState;
+
 
 		
 };
