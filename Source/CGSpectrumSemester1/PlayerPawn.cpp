@@ -33,8 +33,6 @@ void APlayerPawn::BeginPlay()
 {
 	Super::BeginPlay();
 
-
-	
 }
 
 // Called every frame
