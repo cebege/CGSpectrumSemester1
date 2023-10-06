@@ -52,18 +52,18 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 void APlayerPawn::Move(float input)
 {
-	FVector DeltaLocation;
+	FVector DeltaLocation = FVector::ZeroVector;
 	DeltaLocation.X = input * MovementSpeed * UGameplayStatics::GetWorldDeltaSeconds(this);
 	AddActorLocalOffset(DeltaLocation);
-	UE_LOG(LogTemp, Warning, TEXT("Move Input: %f"), input);
+	//UE_LOG(LogTemp, Warning, TEXT("Move Input: %f"), input);
 }
 
 void APlayerPawn::Turn(float input)
 {
-	FRotator DeltaRotation;
+	FRotator DeltaRotation = FRotator::ZeroRotator;
 	DeltaRotation.Yaw = input * TurnSpeed * UGameplayStatics::GetWorldDeltaSeconds(this);
 	AddActorLocalRotation(DeltaRotation);
-	UE_LOG(LogTemp, Warning, TEXT("Turn Input: %f"), input);
+	//UE_LOG(LogTemp, Warning, TEXT("Turn Input: %f"), input);
 }
 
 

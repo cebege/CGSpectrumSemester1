@@ -13,5 +13,11 @@ UCLASS()
 class CGSPECTRUMSEMESTER1_API ACGSpectrumSemester1GameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
+
+public:
+	void StartPlay() override;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf< class UUserWidget> ObjectiveWidgetClass;
 	
 };
