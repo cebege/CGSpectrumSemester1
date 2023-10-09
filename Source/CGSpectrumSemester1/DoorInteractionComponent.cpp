@@ -89,7 +89,6 @@ void UDoorInteractionComponent::OnDoorOpen()
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, TEXT("DoorOpened"));
 }
 
-
 void UDoorInteractionComponent::OnDebugToggled(IConsoleVariable* Var)
 {
 	UE_LOG(LogTemp, Warning, TEXT("OnDebugToggled"));
