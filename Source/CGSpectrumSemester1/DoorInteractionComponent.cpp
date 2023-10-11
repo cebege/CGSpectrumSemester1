@@ -72,9 +72,10 @@ void UDoorInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 		if (TimeRatio >= 1.0f)
 		{
 			OnDoorOpen();
+
 		}
 	}
-	DebugDraw(); 
+	DebugDraw();
 }
 
 void UDoorInteractionComponent::OnDoorOpen()
@@ -97,9 +98,9 @@ void UDoorInteractionComponent::DebugDraw()
 {
 	if (CVarToggleDebugDoor->GetBool())
 	{
-		FVector Offset(FLT_METERS(-1.5f), 0.0f, FLT_METERS(0.0f));
-		FVector StartLocation = GetOwner()->GetActorLocation()+ Offset;
+		FVector Offset(FLT_METERS(-0.75f), 0.0f, FLT_METERS(1.5f));
+		FVector StartLocation = GetOwner()->GetActorLocation() + Offset;
 		FString UEnumAsString = TEXT("Door State: ") + UEnum::GetDisplayValueAsText(DoorState).ToString();
-		DrawDebugString(GetWorld(), StartLocation, UEnumAsString, GetOwner(), FColor::Blue, 0.0f);
+		DrawDebugString(GetWorld(), Offset, UEnumAsString, GetOwner(), FColor::Blue, 0.0f);
 	}
 }
