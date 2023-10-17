@@ -72,7 +72,6 @@ void UDoorInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 		if (TimeRatio >= 1.0f)
 		{
 			OnDoorOpen();
-
 		}
 	}
 	DebugDraw();
