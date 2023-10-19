@@ -12,7 +12,6 @@ void UObjectiveWorldSubsystem::CreateObjectiveWidget(TSubclassOf<class UUserWidg
 	{
 		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 		ObjectiveWidget = CreateWidget<UUserWidget>(PlayerController, ObjectiveWidgetClass);
-
 	}
 }
 
