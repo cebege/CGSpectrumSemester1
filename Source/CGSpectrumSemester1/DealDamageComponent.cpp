@@ -26,17 +26,15 @@ void UDealDamageComponent::BeginPlay()
 	Super::BeginPlay();
 }
 
-
-// Called every frame
-void UDealDamageComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-}
-
 void UDealDamageComponent::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Sweep)
 {
 	UE_LOG(LogTemp, Warning, TEXT("UDealDamageComponent: OnOverlapBegin"));
+
+	if (!bActive)
+	{
+		return;
+	}
+
 	if (OtherActor == GetOwner())
 	{
 		return;

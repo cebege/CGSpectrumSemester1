@@ -66,8 +66,4 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	EDoorState DoorState;
 
-
-
-		
 };
-

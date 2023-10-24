@@ -17,6 +17,7 @@ class CGSPECTRUMSEMESTER1_API AFireDamageActor : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AFireDamageActor();
+	//virtual void PostActorCreated() override;
 
 protected:
 	// Called when the game starts or when spawned
@@ -31,5 +32,10 @@ public:
 
 	UPROPERTY(EditAnywhere, NoClear)
 	UParticleSystemComponent* ParticleSystemComponent;
+
+	UPROPERTY(EditAnywhere)
+		float ToggleTime = 5.0f;
+
+	float CurrentTime = 0.0f;
 
 };

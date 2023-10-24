@@ -33,7 +33,6 @@ UDoorInteractionComponent::UDoorInteractionComponent()
 	// ...
 }
 
-
 // Called when the game starts
 void UDoorInteractionComponent::BeginPlay()
 {

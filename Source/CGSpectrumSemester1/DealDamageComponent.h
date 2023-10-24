@@ -23,19 +23,23 @@ public:
 	UFUNCTION()
 		void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+	UCapsuleComponent* GetTriggerCapsule() const { return TriggerCapsule; }
+
+	bool IsActive() const { return bActive; }
+
+	void SetActive(bool IsActive) { bActive = IsActive; }
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere)
-		float BaseDamage = 30.f;
+		float BaseDamage = 50.f;
 
 	UPROPERTY(EditAnywhere, NoClear)
 		UCapsuleComponent* TriggerCapsule;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	bool bActive = true;
 
-	UCapsuleComponent* GetTriggerCapsule() { return TriggerCapsule; }
+
 };

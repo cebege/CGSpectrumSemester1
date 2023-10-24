@@ -33,5 +33,18 @@ void AFireDamageActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (DealDamageComponent)
+	{
+		CurrentTime += DeltaTime;
+		if (CurrentTime >= ToggleTime)
+		{
+			if (ParticleSystemComponent)
+			{
+				ParticleSystemComponent->ToggleActive();
+			}
+			DealDamageComponent->SetActive(!DealDamageComponent->IsActive());
+			CurrentTime = 0.0f;
+		}
+	}
 }
 
