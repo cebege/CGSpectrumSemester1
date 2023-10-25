@@ -24,9 +24,9 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void MovePlatform(float DeltaTime);
-	void RotatePlatform(float DeltaTime);
-	bool ShouldPlatformMove() const;
+	void Move(float DeltaTime);
+	void Rotate(float DeltaTime);
+	bool TurnAround() const;
 	float GetDistanceMoved() const;
 
 private:

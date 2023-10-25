@@ -25,15 +25,14 @@ void UMoverComponent::BeginPlay()
 void UMoverComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	MovePlatform(DeltaTime);
-	RotatePlatform(DeltaTime);
+	Move(DeltaTime);
+	Rotate(DeltaTime);
 
-	// ...
 }
 
-void UMoverComponent::MovePlatform(float DeltaTime)
+void UMoverComponent::Move(float DeltaTime)
 {
-	if (ShouldPlatformMove()) // at the turning point.
+	if (TurnAround()) // at the turning point.
 	{
 		FVector MoveDirection = PlatformVelocity.GetSafeNormal();
 		StartLocation = StartLocation + MoveDirection * MoveDistance;
@@ -48,14 +47,14 @@ void UMoverComponent::MovePlatform(float DeltaTime)
 	}
 }
 
-void UMoverComponent::RotatePlatform(float DeltaTime)
+void UMoverComponent::Rotate(float DeltaTime)
 {
 	FRotator CurrentRotation = GetOwner()->GetActorRotation();
 	CurrentRotation = CurrentRotation + RotationVelocity * DeltaTime;
 	GetOwner()->SetActorRotation(CurrentRotation);
 }
 
-bool UMoverComponent::ShouldPlatformMove() const
+bool UMoverComponent::TurnAround() const
 {
 	return GetDistanceMoved() > MoveDistance;
 }
