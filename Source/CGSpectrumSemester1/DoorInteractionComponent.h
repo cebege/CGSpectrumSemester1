@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "InteractionComponent.h"
 #include "DoorInteractionComponent.generated.h"
 
 class ATriggerBox;
 class IConsoleVariable;
+class AActor;
 
 UENUM()
 enum class EDoorState
@@ -19,7 +21,7 @@ enum class EDoorState
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class CGSPECTRUMSEMESTER1_API UDoorInteractionComponent : public UActorComponent
+class CGSPECTRUMSEMESTER1_API UDoorInteractionComponent : public UInteractionComponent
 {
 	GENERATED_BODY()
 
@@ -31,18 +33,29 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	void InteractionStart() override;
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	DECLARE_EVENT(FDoorInteractionComponent, FOpened)
-	FOpened& onOpened() { return OpenedEvent; }
+	FOpened& OnOpened() { return OpenedEvent; }
 
 	FOpened OpenedEvent;
 	
 	static void OnDebugToggled(IConsoleVariable* Var);
 	void DebugDraw();
+
 	void OnDoorOpen();
+
+	UFUNCTION(BlueprintCallable)
+	void OpenDoor();
+
+	UFUNCTION(BlueprintCallable)
+	bool IsOpen() { return DoorState == EDoorState::DS_Open; }
+
+	class UCapsuleComponent* GetTriggerCapsule() { return CapsuleComponent; }
 
 protected:
 
@@ -62,6 +75,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Moving Door Component")
 	FRuntimeFloatCurve OpenCurve;
+
+	UPROPERTY(EditAnywhere, Category = "Moving Door Component")
+	UCapsuleComponent* CapsuleComponent;
 
 	UPROPERTY(BlueprintReadOnly)
 	EDoorState DoorState;

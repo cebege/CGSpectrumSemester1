@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Subsystems/WorldSubsystem.h"
 #include "ObjectiveComp.h"
+#include "ObjectiveHud.h"
 #include "ObjectiveWorldSubsystem.generated.h"
 
 UCLASS()
@@ -13,10 +14,12 @@ class CGSPECTRUMSEMESTER1_API UObjectiveWorldSubsystem : public UWorldSubsystem
 	GENERATED_BODY()
 
 public:
-	void CreateObjectiveWidget(TSubclassOf<class UUserWidget> ObjectiveWidgetClass);
+	void CreateObjectiveWidgets();
 	void DisplayObjectiveWidget();
 
 	void OnObjectiveCompleted();
+
+	void OnMapStart();
 
 	UFUNCTION(BlueprintCallable)
 		FString GetCurrentObjectiveDescription();
@@ -29,8 +32,22 @@ public:
 
 	void OnObjectiveStateChanged(UObjectiveComp* ObjectiveComponent, EObjectiveState ObjectiveState);
 
+	void virtual Deinitialize() override;
+
+	uint32 GetCompletedObjectiveCount();
+
+	void DisplayObjectivesCompleteWidget();
+
+	void RemoveObjectivesCompleteWidget();
+
+	void RemoveObjectiveWidget();
+
 private:
-	UUserWidget* ObjectiveWidget = nullptr;
+	UObjectiveHud* ObjectiveWidget = nullptr;
+
+	UUserWidget* ObjectivesCompleteWidget = nullptr;
+
+protected:
 
 	TArray<UObjectiveComp*> Objectives;
 

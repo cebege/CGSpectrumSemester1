@@ -23,16 +23,13 @@ void UObjectiveComp::SetState(EObjectiveState NewState)
 }
 
 // Called when the game starts or when spawned
-void UObjectiveComp::BeginPlay()
+void UObjectiveComp::InitializeComponent()
 {
-	Super::BeginPlay();
-
 	UObjectiveWorldSubsystem* ObjectiveWorldSubsystem = GetWorld()->GetSubsystem<UObjectiveWorldSubsystem>();
 	if (ObjectiveWorldSubsystem)
 	{
 		ObjectiveWorldSubsystem->AddObjective(this);
 	}
-
 }
 
 void UObjectiveComp::EndPlay(const EEndPlayReason::Type EndPlayReason)

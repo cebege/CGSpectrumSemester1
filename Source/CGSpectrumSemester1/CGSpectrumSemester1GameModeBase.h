@@ -17,7 +17,11 @@ class CGSPECTRUMSEMESTER1_API ACGSpectrumSemester1GameModeBase : public AGameMod
 public:
 	void StartPlay() override;
 
+	void OnMapStart();
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf< class UUserWidget> ObjectiveWidgetClass;
 	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf< class UUserWidget> ObjectiveCompleteWidgetClass;
 };
