@@ -8,6 +8,7 @@
 UObjectiveComp::UObjectiveComp()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	bWantsInitializeComponent = true;
 	PrimaryComponentTick.bCanEverTick = false;
 	State = EObjectiveState::OS_Inactive;
 
@@ -25,10 +26,18 @@ void UObjectiveComp::SetState(EObjectiveState NewState)
 // Called when the game starts or when spawned
 void UObjectiveComp::InitializeComponent()
 {
+	Super::InitializeComponent();
+	UE_LOG(LogTemp, Warning, TEXT("UObjectiveComp::InitializeComponent called for %s"), *GetName());
+
 	UObjectiveWorldSubsystem* ObjectiveWorldSubsystem = GetWorld()->GetSubsystem<UObjectiveWorldSubsystem>();
 	if (ObjectiveWorldSubsystem)
 	{
 		ObjectiveWorldSubsystem->AddObjective(this);
+		UE_LOG(LogTemp, Warning, TEXT("Objective added to World Subsystem."));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("ObjectiveWorldSubsystem not found!"));
 	}
 }
 

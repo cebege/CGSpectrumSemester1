@@ -19,7 +19,6 @@ void UObjectiveWorldSubsystem::CreateObjectiveWidgets()
 	if (ObjectiveWidget == nullptr)
 	{
 		ACGSpectrumSemester1GameModeBase* GameMode = Cast<ACGSpectrumSemester1GameModeBase>(GetWorld()->GetAuthGameMode());
-
 		if (GameMode)
 		{
 			APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
@@ -77,7 +76,6 @@ uint32 UObjectiveWorldSubsystem::GetCompletedObjectiveCount()
 		{
 			++ObjectiveCompleted;
 		}
-
 	}
 	return ObjectiveCompleted;
 }
@@ -139,7 +137,7 @@ void UObjectiveWorldSubsystem::OnObjectiveStateChanged(UObjectiveComp* Objective
 
 	if (ObjectiveWidget && ObjectivesCompleteWidget)
 	{
-		if (GetCompletedObjectiveCount() == Objectives.Num())
+		if ((ObjectiveState == EObjectiveState::OS_Completed) && GetCompletedObjectiveCount() == Objectives.Num())
 		{
 			// Game Over
 			DisplayObjectivesCompleteWidget();
