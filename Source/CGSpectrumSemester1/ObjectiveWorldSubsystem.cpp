@@ -140,6 +140,7 @@ void UObjectiveWorldSubsystem::OnObjectiveStateChanged(UObjectiveComp* Objective
 		if ((ObjectiveState == EObjectiveState::OS_Completed) && GetCompletedObjectiveCount() == Objectives.Num())
 		{
 			// Game Over
+			RemoveObjectiveWidget();
 			DisplayObjectivesCompleteWidget();
 		}
 		else
