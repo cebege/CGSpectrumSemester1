@@ -34,7 +34,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere)
-		float BaseDamage = 50.f;
+		float BaseDamage = 20.f;
 
 	UPROPERTY(EditAnywhere, NoClear)
 		UCapsuleComponent* TriggerCapsule;

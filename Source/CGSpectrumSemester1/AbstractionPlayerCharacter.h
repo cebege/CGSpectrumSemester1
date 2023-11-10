@@ -4,9 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "DamageHandlerComponent.h"
 #include "AbstractionPlayerCharacter.generated.h"
 
 class UHealthComponent;
+class UParticleSystemComponent;
+class UDamageHandlerComponent;
 
 DECLARE_MULTICAST_DELEGATE(FOnInteractionStart);
 DECLARE_MULTICAST_DELEGATE(FOnInteractionCancel);
@@ -29,6 +32,9 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UHealthComponent* HealthComponent;
 
+	UPROPERTY(EditAnywhere)
+	UDamageHandlerComponent* DamageHandlerComponent;
+
 	void StartInteraction();
 	void StopInteraction();
 
@@ -46,6 +52,10 @@ public:
 	FOnInteractionStart OnInteractionStart;
 	FOnInteractionCancel OnInteractionCancel;
 
+	UFUNCTION(BlueprintCallable, Category = "Abstraction")
+	void SetOnFire(float BaseDamage, float DamageTotalTime, float TakeDamageInterval);
 
+	UPROPERTY(EditAnywhere)
+	UParticleSystemComponent* ParticleSystemComponent;
 
 };

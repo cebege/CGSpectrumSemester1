@@ -4,7 +4,9 @@
 #include "AbstractionPlayerCharacter.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/DamageType.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "HealthComponent.h"
+#include "DamageHandlerComponent.h"
 
 // Sets default values
 AAbstractionPlayerCharacter::AAbstractionPlayerCharacter()
@@ -13,6 +15,10 @@ AAbstractionPlayerCharacter::AAbstractionPlayerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
+	DamageHandlerComponent = CreateDefaultSubobject<UDamageHandlerComponent>(TEXT("DamageHandlerComponent"));
+	ParticleSystemComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ParticleSystemComponent"));
+	ParticleSystemComponent->SetupAttachment(RootComponent);
+
 }
 
 // Called when the game starts or when spawned
@@ -27,6 +33,14 @@ void AAbstractionPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AAbstractionPlayerCharacter::SetOnFire(float BaseDamage, float DamageTotalTime, float TakeDamageInterval)
+{
+	if (DamageHandlerComponent)
+	{
+		DamageHandlerComponent->TakeFireDamage(BaseDamage, DamageTotalTime, TakeDamageInterval);
+	}
 }
 
 // Called to bind functionality to input
