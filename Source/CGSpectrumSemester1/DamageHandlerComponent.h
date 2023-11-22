@@ -27,21 +27,23 @@ public:
 
 	void TakeFireDamage(float BaseDamage, float DamageTotalTime, float TakeDamageInterval);
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Particles)
+		class UParticleSystem* FireTemplate;
+
 	struct FDamageInfo
 	{
-		float BaseDamage = 0.0f;
+		float BaseDamage = 20.0f;
 		float AccumulatedTime = 0.0f;
 		float CurrentIntervalTime = 0.0f;
-		float IntervalTime = 0.0f;
-		float Lifetime = 0.0f;
+		float IntervalTime = 1.0f;
+		float Lifetime = 5.0f;
 	};
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Particles)
-		class UParticleSystem* FireTemplate;
+
 
 	TOptional<FDamageInfo> ActiveDamageInfo;
 

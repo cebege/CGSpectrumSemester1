@@ -31,7 +31,8 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void TakeDamage(float Damage) { CurrentHealth -= Damage; }
+	void SetCurrentHealth(float Health) { CurrentHealth = Health; }
 	bool IsDead() { return CurrentHealth <= FLT_EPSILON; }
 
-		
+	const float GetCurrentHealth() const { return CurrentHealth; }
 };
