@@ -6,6 +6,7 @@
 #include "GameFramework/DamageType.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "HealthComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "DamageHandlerComponent.h"
 
 // Sets default values
@@ -25,6 +26,8 @@ AAbstractionPlayerCharacter::AAbstractionPlayerCharacter()
 void AAbstractionPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	PC = GetWorld()->GetFirstPlayerController();
 	
 }
 
@@ -75,6 +78,7 @@ float AAbstractionPlayerCharacter::TakeDamage(float DamageAmount, struct FDamage
 			OnDeath(false);
 		}
 	}
+	//TogglePostProcess();
 	return Damage;
 }
 
@@ -118,4 +122,15 @@ const float AAbstractionPlayerCharacter::GetCurrentHealth() const
 		return HealthComponent->GetCurrentHealth();
 	}
 	return 0.0f;
+}
+
+void AAbstractionPlayerCharacter::HandleItemCollected()
+{
+	ItemsCollected++;
+
+	PC->PlayerCameraManager->PlayCameraShake(CamShake, 1.0f);
+
+	PC->PlayDynamicForceFeedback(ForceFeedBackIntensity, ForceFeedbackDuration, true, false, true, false, EDynamicForceFeedbackAction::Start);
+		
+	ItemCollected();
 }

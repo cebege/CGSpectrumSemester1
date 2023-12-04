@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/PlayerController.h"
 #include "DamageHandlerComponent.h"
 #include "AbstractionPlayerCharacter.generated.h"
 
@@ -35,8 +36,25 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UDamageHandlerComponent* DamageHandlerComponent;
 
+	UFUNCTION(BlueprintImplementableEvent)
+		void TogglePostProcess();
+
 	void StartInteraction();
 	void StopInteraction();
+
+	APlayerController* PC;
+
+	UPROPERTY(EditAnywhere, Category = "Effects")
+		TSubclassOf<UCameraShake> CamShake;
+
+	// Force Feedback Values
+
+	UPROPERTY(EditAnywhere, Category = "Force Feedback")
+	float ForceFeedBackIntensity = 1.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Force Feedback")
+	float ForceFeedbackDuration = 1.0f;
+
 
 public:	
 	// Called every frame
@@ -54,6 +72,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Abstraction")
 	void SetOnFire(float BaseDamage, float DamageTotalTime, float TakeDamageInterval);
+
+	UFUNCTION(BlueprintCallable)
+	void HandleItemCollected();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void ItemCollected();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int ItemsCollected = 0;
 
 	UPROPERTY(EditAnywhere)
 	UParticleSystemComponent* ParticleSystemComponent;
