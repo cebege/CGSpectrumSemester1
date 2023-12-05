@@ -75,10 +75,11 @@ float AAbstractionPlayerCharacter::TakeDamage(float DamageAmount, struct FDamage
 		HealthComponent->TakeDamage(Damage);
 		if (HealthComponent->IsDead())
 		{
+			TogglePostProcess();
 			OnDeath(false);
 		}
 	}
-	//TogglePostProcess();
+
 	return Damage;
 }
 
