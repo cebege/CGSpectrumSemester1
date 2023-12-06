@@ -40,4 +40,6 @@ protected:
 		UCapsuleComponent* TriggerCapsule;
 
 	bool bActive = true;
+
+
 };

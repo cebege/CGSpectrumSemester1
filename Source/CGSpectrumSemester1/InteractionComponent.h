@@ -48,8 +48,5 @@ protected:
 		UCapsuleComponent* TriggerCapsule = nullptr;
 
 	AActor* InteractingActor = nullptr;
-
-	bool bActive = true;
-
 		
 };

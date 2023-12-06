@@ -6,10 +6,8 @@
 #include "Engine/World.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/Actor.h"
-#include "Components/TextRenderComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "ObjectiveWorldSubsystem.h"
-
 
 #include "DrawDebugHelpers.h"
 
@@ -53,43 +51,6 @@ void UDoorInteractionComponent::BeginPlay()
 	FinalRotation = StartRotation + DesiredRotation;
 	CurrentRotationTime = 0.0f;
 
-	TextRenderComponent = GetOwner()->FindComponentByClass<UTextRenderComponent>();
-	AudioComponent = GetOwner()->FindComponentByClass<UAudioComponent>();
-}
-
-void UDoorInteractionComponent::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Sweep)
-{
-	UE_LOG(LogTemp, Warning, TEXT("UDoorInteractionComponent::OnOverlapBegin"));
-	// we already have somebody interacting, currently we don't support multiple interactions
-	if (InteractingActor || !bActive)
-	{
-		return;
-	}
-
-	// for now we will get that component and set visible
-
-	if (OtherActor->ActorHasTag("Player"))
-	{
-		InteractingActor = OtherActor;
-		if (TextRenderComponent)
-		{
-			TextRenderComponent->SetText(InteractionPrompt);
-			TextRenderComponent->SetVisibility(true);
-		}
-	}
-}
-
-void UDoorInteractionComponent::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	UE_LOG(LogTemp, Warning, TEXT("UDoorInteractionComponent::OnOverlapEnd"));
-	if (OtherActor == InteractingActor)
-	{
-		InteractingActor == nullptr;
-		if (TextRenderComponent)
-		{
-			TextRenderComponent->SetVisibility(false);
-		}
-	}
 }
 
 void UDoorInteractionComponent::OpenDoor()
