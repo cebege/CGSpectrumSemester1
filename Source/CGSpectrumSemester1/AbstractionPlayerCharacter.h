@@ -55,7 +55,6 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Force Feedback")
 	float ForceFeedbackDuration = 1.0f;
 
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
