@@ -44,7 +44,7 @@ protected:
 	UPROPERTY(EditAnywhere)
 		FText InteractionPrompt;
 
-	UPROPERTY(EditAnywhere, NoClear)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), NoClear)
 		UCapsuleComponent* TriggerCapsule = nullptr;
 
 	AActor* InteractingActor = nullptr;

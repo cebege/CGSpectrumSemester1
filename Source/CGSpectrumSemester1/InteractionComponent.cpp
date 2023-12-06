@@ -21,6 +21,7 @@ UInteractionComponent::UInteractionComponent()
 	TriggerCapsule->OnComponentEndOverlap.AddDynamic(this, &UInteractionComponent::OnOverlapEnd);
 
 	InteractingActor = nullptr;
+	bActive = true;
 	// ...
 }
 
