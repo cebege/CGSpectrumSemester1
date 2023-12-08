@@ -3,6 +3,7 @@
 
 #include "DoorInteractionComponent.h"
 #include "Engine/TriggerBox.h"
+#include "Components/BoxComponent.h"
 #include "Engine/World.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/Actor.h"
@@ -31,6 +32,13 @@ UDoorInteractionComponent::UDoorInteractionComponent()
 
 	DoorState = EDoorState::DS_Closed;
 
+	TextRenderComponent = CreateDefaultSubobject<UTextRenderComponent>(TEXT("Text Render Component"));
+	TextRenderComponent->SetupAttachment(TriggerCapsule);
+
+	TriggerComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerComponent"));
+	TriggerComponent->SetBoxExtent(FVector(100, 100, 100)); 
+	TriggerComponent->SetCollisionProfileName(TEXT("Trigger"));
+
 	CVarToggleDebugDoor.AsVariable()->SetOnChangedCallback(FConsoleVariableDelegate::CreateStatic(&UDoorInteractionComponent::OnDebugToggled));
 	// ...
 }
@@ -54,7 +62,13 @@ void UDoorInteractionComponent::BeginPlay()
 	CurrentRotationTime = 0.0f;
 
 	TextRenderComponent = GetOwner()->FindComponentByClass<UTextRenderComponent>();
-	AudioComponent = GetOwner()->FindComponentByClass<UAudioComponent>();
+	//AudioComponent = GetOwner()->FindComponentByClass<UAudioComponent>();
+
+	if (AudioComponent)
+	{
+		AudioComponent->bAutoActivate = false; // Prevents the component from playing on BeginPlay
+		AudioComponent->Deactivate();
+	}
 }
 
 void UDoorInteractionComponent::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Sweep)
@@ -94,9 +108,16 @@ void UDoorInteractionComponent::OnOverlapEnd(class UPrimitiveComponent* Overlapp
 
 void UDoorInteractionComponent::OpenDoor()
 {
+	UE_LOG(LogTemp, Warning, TEXT("OpenDoor() called"));
+
 	if (IsOpen() || DoorState == EDoorState::DS_Opening)
 	{
 		return;
+	}
+
+	if (AudioComponent)
+	{
+		AudioComponent->Play();
 	}
 
 	DoorState = EDoorState::DS_Opening;
@@ -110,11 +131,15 @@ void UDoorInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 
 	if (DoorState == EDoorState::DS_Closed)
 	{
-		if (TriggerBox && GetWorld() && GetWorld()->GetFirstLocalPlayerFromController())
+		if (TriggerComponent && GetWorld() && GetWorld()->GetFirstLocalPlayerFromController())
 		{
 			APawn* Pawn = GetWorld()->GetFirstPlayerController()->GetPawn();
-			if (Pawn && TriggerBox->IsOverlappingActor(Pawn))
+			if (Pawn && TriggerComponent->IsOverlappingActor(Pawn))
 			{
+				if (AudioComponent)
+				{
+					AudioComponent->Play();
+				}
 				DoorState = EDoorState::DS_Opening;
 				CurrentRotationTime = 0.0f;
 			}
@@ -138,6 +163,7 @@ void UDoorInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 void UDoorInteractionComponent::OnDoorOpen()
 {
 	DoorState = EDoorState::DS_Open;
+
 	UObjectiveComp* ObjectiveComponent = GetOwner()->FindComponentByClass<UObjectiveComp>();
 	if (ObjectiveComponent)
 	{

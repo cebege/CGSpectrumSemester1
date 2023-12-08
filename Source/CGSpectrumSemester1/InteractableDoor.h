@@ -19,6 +19,9 @@ public:
 
 	AInteractableDoor();
 
+	UFUNCTION(BlueprintCallable)
+	void OpenDoor();
+
 	virtual void BeginPlay() override;
 
 	float InteractionTime = 5.0f;
@@ -31,7 +34,7 @@ protected:
 	UFUNCTION()
 	void OnInteractionSuccess();
 
-	UPROPERTY(EditAnywhere, NoClear)
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"), NoClear)
 	UDoorInteractionComponent* DoorInteractionComp;
 	
 };

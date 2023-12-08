@@ -9,16 +9,21 @@
 AInteractableDoor::AInteractableDoor()
 {
 	DoorInteractionComp = CreateDefaultSubobject<UDoorInteractionComponent>(TEXT("Door Interaction Component"));
-	if (DoorInteractionComp->GetTriggerCapsule())
-	{
-		DoorInteractionComp->GetTriggerCapsule()->SetupAttachment(RootComponent);
-	}
+	//if (DoorInteractionComp->GetTriggerCapsule())
+	//{
+	//	DoorInteractionComp->GetTriggerCapsule()->SetupAttachment(RootComponent);
+	//}
 }
 
 void AInteractableDoor::BeginPlay()
 {
 	Super::BeginPlay();
 	DoorInteractionComp->InteractionSuccess.AddDynamic(this, &AInteractableDoor::OnInteractionSuccess);
+}
+
+void AInteractableDoor::OpenDoor()
+{
+	DoorInteractionComp->OpenDoor();
 }
 
 void AInteractableDoor::OnInteractionSuccess()

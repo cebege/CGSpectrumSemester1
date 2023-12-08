@@ -10,6 +10,7 @@ class AActor;
 class UCapsuleComponent;
 class UPrimitiveComponent;
 
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnInteractionSuccess);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -44,7 +45,7 @@ protected:
 	UPROPERTY(EditAnywhere)
 		FText InteractionPrompt;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), NoClear)
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"), NoClear)
 		UCapsuleComponent* TriggerCapsule = nullptr;
 
 	AActor* InteractingActor = nullptr;

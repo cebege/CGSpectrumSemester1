@@ -10,6 +10,9 @@
 class ATriggerBox;
 class IConsoleVariable;
 class AActor;
+class UBoxComponent;
+class UAudioComponent;
+class UTextRenderComponent;
 
 UENUM()
 enum class EDoorState
@@ -53,7 +56,6 @@ public:
 
 	void OnDoorOpen();
 
-	UFUNCTION(BlueprintCallable)
 	void OpenDoor();
 
 	UFUNCTION(BlueprintCallable)
@@ -69,29 +71,30 @@ protected:
 	FRotator StartRotation = FRotator::ZeroRotator;
 	FRotator FinalRotation = FRotator::ZeroRotator;
 
-	UPROPERTY(EditAnywhere, Category = "Moving Door Component")
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"), Category = "Moving Door Component")
 		float TimeToRotate = 4.0f;
 
 		float CurrentRotationTime = 0.0f;
 
-	UPROPERTY(EditAnywhere, Category = "Moving Door Component")
-	ATriggerBox* TriggerBox;
+	//UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"), Category = "Moving Door Component")
+	//ATriggerBox* TriggerBox;
 
-	UPROPERTY(EditAnywhere, Category = "Moving Door Component")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "Moving Door Component"))
+	UBoxComponent* TriggerComponent;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"), Category = "Moving Door Component")
 	FRuntimeFloatCurve OpenCurve;
 
-	UPROPERTY(EditAnywhere, Category = "Moving Door Component")
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"), Category = "Moving Door Component")
 	UCapsuleComponent* CapsuleComponent;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	UAudioComponent* AudioComponent = nullptr;
 
 	UPROPERTY(BlueprintReadOnly)
 	EDoorState DoorState;
 
-	UPROPERTY(Instanced, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	class UTextRenderComponent* TextRenderComponent;
-
-	UPROPERTY(Instanced, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	class UAudioComponent* AudioComponent;
-
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), Category = "Text Rendering")
+	UTextRenderComponent* TextRenderComponent;
 
 };
